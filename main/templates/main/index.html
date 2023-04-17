@@ -1,0 +1,69 @@
+{% load static %}
+
+<link rel="stylesheet" href="{% static 'main/style.css' %}">
+
+<html>
+    <head></head>
+    <body>
+    <h3 align = "center">Oil/Liquids production data</h3>
+
+    <form align = "center" enctype="multipart/form-data" action="" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="Upload">
+    </form>
+
+    {% if entry_list %}
+	<table class = "table">
+        <thead>
+            <tr>
+                <th>Company</th>
+                <th>Date</th>
+                <th>Qliq 1 (factual)</th>
+                <th>Qliq 2 (factual)</th>
+                <th>Qoil 1 (factual)</th>
+                <th>Qoil 2 (factual)</th>
+                <th>Qliq 1 (forecast)</th>
+                <th>Qliq 2 (forecast)</th>
+                <th>Qoil 1 (forecast)</th>
+                <th>Qoil 2 (forecast)</th>
+            </tr>
+        </thead>
+        <tbody>
+	    {% for item in entry_list %}
+            <tr> 
+                <td>{{ item.company }}</td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.qliq_factual_1 }}</td>
+                <td>{{ item.qliq_factual_2 }}</td>
+                <td>{{ item.qoil_factual_1 }}</td>
+                <td>{{ item.qoil_factual_2 }}</td>
+                <td>{{ item.qliq_forecast_1 }}</td>
+                <td>{{ item.qliq_forecast_2 }}</td>
+                <td>{{ item.qoil_forecast_1 }}</td>
+                <td>{{ item.qoil_forecast_2 }}</td>
+            </tr>
+	    {% endfor %}
+        {% if total_data %}
+        {% for item in total_data %}
+            <tr bgcolor = "#EDEDED">
+                <td> Total </td>
+                <td>{{ item.date }}</td>
+                <td>{{ item.qliq_factual_1_total }}</td>
+                <td>{{ item.qliq_factual_2_total }}</td>
+                <td>{{ item.qoil_factual_1_total }}</td>
+                <td>{{ item.qoil_factual_2_total }}</td>
+                <td>{{ item.qliq_forecast_1_total }}</td>
+                <td>{{ item.qliq_forecast_2_total }}</td>
+                <td>{{ item.qoil_forecast_1_total }}</td>
+                <td>{{ item.qoil_forecast_2_total }}</td>
+            </tr>
+        {% endfor %}
+	    {% endif %}
+        </tbody>
+	</table>
+    {% else %}
+	<p>No data available.</p>
+    {% endif %}
+    </body>
+</html>
